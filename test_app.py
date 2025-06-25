@@ -106,5 +106,15 @@ class TestCallRouterApp(unittest.TestCase):
         self.assertIn("<Dial>", response_xml)
         self.assertIn(f"<Number>{expected_phone}</Number>", response_xml)
 
+    def test_health_check_api(self):
+        """Test the /health API endpoint."""
+        response = self.client.get("/health")
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.content_type, "application/json")
+
+        response_json = response.get_json()
+        self.assertEqual(response_json, {"status": "ok"})
+
 if __name__ == '__main__':
     unittest.main()

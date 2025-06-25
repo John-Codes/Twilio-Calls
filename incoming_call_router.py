@@ -38,6 +38,12 @@ def voice_webhook():
         response.say("Sorry, we encountered an error. Please try again later.")
         return str(response)
 
+@app.route("/health", methods=['GET'])
+def health_check():
+    """Returns a simple health status for the service."""
+    logging.info("Health check endpoint accessed.")
+    return {"status": "ok"}, 200
+
 if __name__ == "__main__":
     # For development purposes only. Use a proper WSGI server for production.
     app.run(debug=True, port=5000)
