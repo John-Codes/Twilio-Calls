@@ -38,6 +38,18 @@ def voice_webhook():
         response.say("Sorry, we encountered an error. Please try again later.")
         return str(response)
 
+@app.route("/call-status", methods=['POST'])
+def call_status_webhook():
+    """Handles call status updates from Twilio."""
+    try:
+        status = request.form.get('CallStatus')
+        call_sid = request.form.get('CallSid')
+        logging.info(f"Call status update received for Call SID: {call_sid}, Status: {status}")
+        return {"status": "received"}, 200
+    except Exception as e:
+        logging.error(f"Error processing call status update: {str(e)}")
+        return {"status": "error"}, 500
+
 @app.route("/health", methods=['GET'])
 def health_check():
     """Returns a simple health status for the service."""

@@ -32,7 +32,10 @@ def initiate_call(to_number, person_name):
         call = client.calls.create(
             url="http://demo.twilio.com/docs/voice.xml",  # Using demo TwiML for simplicity; adjust if custom TwiML is needed
             to=to_number,
-            from_=from_number
+            from_=from_number,
+            status_callback="http://your-server-url/call-status",  # Replace with actual server URL in production
+            status_callback_method="POST",
+            status_callback_event=["initiated", "ringing", "answered", "completed"]
         )
         print(f"Call initiated successfully to {person_name}. Call SID: {call.sid}")
         return call.sid
